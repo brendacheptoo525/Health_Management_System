@@ -46,4 +46,10 @@ def menu():
                 doctor_id = int(input("Enter doctor id: "))
                 create_appointment(session, appointment_date, reason, status, patient_id, doctor_id)
             
+            elif choice == '4':
+                list_patients(session)
+            elif choice == '5':
+                list_doctors(session)
+            elif choice == '6':
+                list_appointments(session)
 
