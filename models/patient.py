@@ -13,6 +13,7 @@ class Patient(Base):
 
     doctor = relationship("Doctor", back_populates="patients")
 
+
 def create_patient(session, name, age, illness, doctor_id):
     try:
         patient = Patient(name=name, age=age, illness=illness, doctor_id=doctor_id)
@@ -21,6 +22,7 @@ def create_patient(session, name, age, illness, doctor_id):
         print("Patient created successfully.")
     except Exception as e:
         print("Error occurred while creating patient:", e)
+
 
 def list_patients(session):
     try:
@@ -45,6 +47,7 @@ def delete_patient(session, patient_id):
             print("Patient not found.")
     except Exception as e:
         print("Error occurred while deleting patient:", e)
+
 
 def update_patient(session, patient_id, new_name, new_age, new_illness, new_doctor_id):
     try:
