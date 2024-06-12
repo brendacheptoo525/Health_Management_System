@@ -27,4 +27,23 @@ def menu():
             print("12. Delete Appointment")
             print("13. Exit")
 
+            if choice == '1':
+                name = input("Enter patient name: ")
+                age = int(input("Enter patient age: "))
+                illness = input("Enter patient illness: ")
+                doctor_id = int(input("Enter doctor id: "))
+                create_patient(session, name, age, illness, doctor_id)
+            elif choice == '2':
+                name = input("Enter doctor name: ")
+                speciality = input("Enter doctor speciality: ")
+                contact = input("Enter doctor contact: ")
+                create_doctor(session, name, speciality, contact)
+            elif choice == '3':
+                appointment_date = input("Enter appointment date (YYYY-MM-DD): ")
+                reason = input("Enter appointment reason: ")
+                status = input("Enter appointment status: ")
+                patient_id = int(input("Enter patient id: "))
+                doctor_id = int(input("Enter doctor id: "))
+                create_appointment(session, appointment_date, reason, status, patient_id, doctor_id)
             
+
