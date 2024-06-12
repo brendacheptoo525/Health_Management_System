@@ -19,3 +19,15 @@ def create_appointment(session, appointment_date, reason, status, patient_id, do
         print("Appointment created successfully.")
     except Exception as e:
         print("Error occurred while creating appointment:", e)
+
+def list_appointments(session):
+    try:
+        appointments = session.query(Appointment).all()
+        if appointments:
+            print("Appointments:")
+            for appointment in appointments:
+                print(f"ID: {appointment.id}, Date: {appointment.appointment_date}, Reason: {appointment.reason}, Status: {appointment.status}, Patient ID: {appointment.patient_id}, Doctor ID: {appointment.doctor_id}")
+        else:
+            print("No appointments found.")
+    except Exception as e:
+        print("Error occurred while listing appointments:", e)
