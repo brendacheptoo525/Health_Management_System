@@ -31,3 +31,14 @@ def list_appointments(session):
             print("No appointments found.")
     except Exception as e:
         print("Error occurred while listing appointments:", e)
+def delete_appointment(session, appointment_id):
+    try:
+        appointment = session.query(Appointment).filter_by(id=appointment_id).first()
+        if appointment:
+            session.delete(appointment)
+            session.commit()
+            print("Appointment deleted successfully.")
+        else:
+            print("Appointment not found.")
+    except Exception as e:
+        print("Error occurred while deleting appointment:", e)
