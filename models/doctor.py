@@ -11,3 +11,12 @@ class Doctor(Base):
     contact = Column(String, nullable=False)
 
     patients = relationship("Patient", back_populates="doctor")
+
+def create_doctor(session, name, speciality, contact):
+    try:
+        doctor = Doctor(name=name, speciality=speciality, contact=contact)
+        session.add(doctor)
+        session.commit()
+        print("Doctor created successfully.")
+    except Exception as e:
+        print("Error occurred while creating doctor:", e)
