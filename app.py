@@ -53,3 +53,25 @@ def menu():
             elif choice == '6':
                 list_appointments(session)
 
+            elif choice == '7':
+                patient_id = int(input("Enter patient id to update: "))
+                new_name = input("Enter new patient name: ")
+                new_age = int(input("Enter new patient age: "))
+                new_illness = input("Enter new patient illness: ")
+                new_doctor_id = int(input("Enter new doctor id: "))
+                update_patient(session, patient_id, new_name, new_age, new_illness, new_doctor_id)
+            elif choice == '8':
+                doctor_id = int(input("Enter doctor id to update: "))
+                new_name = input("Enter new doctor name: ")
+                new_speciality = input("Enter new doctor speciality: ")
+                new_contact = input("Enter new doctor contact: ")
+                update_doctor(session, doctor_id, new_name, new_speciality, new_contact)
+            elif choice == '9':
+                appointment_id = int(input("Enter appointment id to update: "))
+                new_date = input("Enter new appointment date (YYYY-MM-DD): ")
+                new_reason = input("Enter new appointment reason: ")
+                new_status = input("Enter new appointment status: ")
+                new_patient_id = int(input("Enter new patient id: "))
+                new_doctor_id = int(input("Enter new doctor id: "))
+                update_appointment(session, appointment_id, new_date, new_reason, new_status, new_patient_id, new_doctor_id)
+
