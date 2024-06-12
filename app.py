@@ -26,7 +26,9 @@ def menu():
             print("11. Delete Doctor")
             print("12. Delete Appointment")
             print("13. Exit")
-
+     
+            choice = input("Enter your choice: ")
+     
             if choice == '1':
                 name = input("Enter patient name: ")
                 age = int(input("Enter patient age: "))
@@ -45,14 +47,12 @@ def menu():
                 patient_id = int(input("Enter patient id: "))
                 doctor_id = int(input("Enter doctor id: "))
                 create_appointment(session, appointment_date, reason, status, patient_id, doctor_id)
-            
             elif choice == '4':
                 list_patients(session)
             elif choice == '5':
                 list_doctors(session)
             elif choice == '6':
                 list_appointments(session)
-
             elif choice == '7':
                 patient_id = int(input("Enter patient id to update: "))
                 new_name = input("Enter new patient name: ")
@@ -74,7 +74,6 @@ def menu():
                 new_patient_id = int(input("Enter new patient id: "))
                 new_doctor_id = int(input("Enter new doctor id: "))
                 update_appointment(session, appointment_id, new_date, new_reason, new_status, new_patient_id, new_doctor_id)
-
             elif choice == '10':
                 patient_id = int(input("Enter patient id to delete: "))
                 delete_patient(session, patient_id)
@@ -92,3 +91,5 @@ def menu():
     finally:
         session.close()
 
+if __name__ == '__main__':
+    menu()

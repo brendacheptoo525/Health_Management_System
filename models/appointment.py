@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from database.connection import Base
 
 class Appointment(Base):
-    _tablename_ = 'appointment'
+    __tablename__ = 'appointment'
 
     id = Column(Integer, primary_key=True, index=True)
     appointment_date = Column(String, nullable=False)
@@ -32,6 +32,18 @@ def list_appointments(session):
     except Exception as e:
         print("Error occurred while listing appointments:", e)
 
+def delete_appointment(session, appointment_id):
+    try:
+        appointment = session.query(Appointment).filter_by(id=appointment_id).first()
+        if appointment:
+            session.delete(appointment)
+            session.commit()
+            print("Appointment deleted successfully.")
+        else:
+            print("Appointment not found.")
+    except Exception as e:
+        print("Error occurred while deleting appointment:", e)
+
 def update_appointment(session, appointment_id, new_date, new_reason, new_status, new_patient_id, new_doctor_id):
     try:
         appointment = session.query(Appointment).filter_by(id=appointment_id).first()
@@ -47,15 +59,3 @@ def update_appointment(session, appointment_id, new_date, new_reason, new_status
             print("Appointment not found.")
     except Exception as e:
         print("Error occurred while updating appointment:", e)
-
-def delete_appointment(session, appointment_id):
-    try:
-        appointment = session.query(Appointment).filter_by(id=appointment_id).first()
-        if appointment:
-            session.delete(appointment)
-            session.commit()
-            print("Appointment deleted successfully.")
-        else:
-            print("Appointment not found.")
-    except Exception as e:
-        print("Error occurred while deleting appointment:", e)
