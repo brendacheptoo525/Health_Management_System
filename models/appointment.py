@@ -11,6 +11,10 @@ class Appointment(Base):
     patient_id = Column(Integer, ForeignKey('patient.id'))
     doctor_id = Column(Integer, ForeignKey('doctor.id'))
 
+      @classmethod
+    def find_by_id(cls, session, appointment_id):
+        return session.query(cls).filter(cls.id == appointment_id).first()
+
 def create_appointment(session, appointment_date, reason, status, patient_id, doctor_id):
     try:
         appointment = Appointment(appointment_date=appointment_date, reason=reason, status=status, patient_id=patient_id, doctor_id=doctor_id)

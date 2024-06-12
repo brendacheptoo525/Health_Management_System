@@ -13,6 +13,10 @@ class Patient(Base):
 
     doctor = relationship("Doctor", back_populates="patients")
 
+    @classmethod
+    def find_by_id(cls, session, patient_id):
+        return session.query(cls).filter(cls.id == patient_id).first()
+        
 def create_patient(session, name, age, illness, doctor_id):
     try:
         patient = Patient(name=name, age=age, illness=illness, doctor_id=doctor_id)
