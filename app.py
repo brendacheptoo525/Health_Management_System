@@ -75,3 +75,20 @@ def menu():
                 new_doctor_id = int(input("Enter new doctor id: "))
                 update_appointment(session, appointment_id, new_date, new_reason, new_status, new_patient_id, new_doctor_id)
 
+            elif choice == '10':
+                patient_id = int(input("Enter patient id to delete: "))
+                delete_patient(session, patient_id)
+            elif choice == '11':
+                doctor_id = int(input("Enter doctor id to delete: "))
+                delete_doctor(session, doctor_id)
+            elif choice == '12':
+                appointment_id = int(input("Enter appointment id to delete: "))
+                delete_appointment(session, appointment_id)
+            elif choice == '13':
+                print("Exiting the program.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+    finally:
+        session.close()
+
