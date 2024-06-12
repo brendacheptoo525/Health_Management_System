@@ -31,6 +31,23 @@ def list_appointments(session):
             print("No appointments found.")
     except Exception as e:
         print("Error occurred while listing appointments:", e)
+
+def update_appointment(session, appointment_id, new_date, new_reason, new_status, new_patient_id, new_doctor_id):
+    try:
+        appointment = session.query(Appointment).filter_by(id=appointment_id).first()
+        if appointment:
+            appointment.appointment_date = new_date
+            appointment.reason = new_reason
+            appointment.status = new_status
+            appointment.patient_id = new_patient_id
+            appointment.doctor_id = new_doctor_id
+            session.commit()
+            print("Appointment updated successfully.")
+        else:
+            print("Appointment not found.")
+    except Exception as e:
+        print("Error occurred while updating appointment:", e)
+
 def delete_appointment(session, appointment_id):
     try:
         appointment = session.query(Appointment).filter_by(id=appointment_id).first()
