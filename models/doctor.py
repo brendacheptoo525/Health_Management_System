@@ -32,3 +32,29 @@ def list_doctors(session):
             print("No doctors found.")
     except Exception as e:
         print("Error occurred while listing doctors:", e)
+
+def delete_doctor(session, doctor_id):
+    try:
+        doctor = session.query(Doctor).filter_by(id=doctor_id).first()
+        if doctor:
+            session.delete(doctor)
+            session.commit()
+            print("Doctor deleted successfully.")
+        else:
+            print("Doctor not found.")
+    except Exception as e:
+        print("Error occurred while deleting doctor:", e)
+
+def update_doctor(session, doctor_id, new_name, new_speciality, new_contact):
+    try:
+        doctor = session.query(Doctor).filter_by(id=doctor_id).first()
+        if doctor:
+            doctor.name = new_name
+            doctor.speciality = new_speciality
+            doctor.contact = new_contact
+            session.commit()
+            print("Doctor updated successfully.")
+        else:
+            print("Doctor not found.")
+    except Exception as e:
+        print("Error occurred while updating doctor:", e)
