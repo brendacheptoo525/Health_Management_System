@@ -1,8 +1,8 @@
 from sqlalchemy.orm import sessionmaker
 from database.connection import create_engine, DATABASE_URL
-from models.patient import create_patient, update_patient, delete_patient, list_patients
-from models.doctor import create_doctor, update_doctor, delete_doctor, list_doctors
-from models.appointment import create_appointment, update_appointment, delete_appointment, list_appointments
+from models.patient import Patient, create_patient, update_patient, delete_patient, list_patients
+from models.doctor import Doctor, create_doctor, update_doctor, delete_doctor, list_doctors
+from models.appointment import Appointment, create_appointment, update_appointment, delete_appointment, list_appointments
 
 # Create engine and session
 engine = create_engine(DATABASE_URL)
@@ -25,7 +25,10 @@ def menu():
             print("10. Delete Patient")
             print("11. Delete Doctor")
             print("12. Delete Appointment")
-            print("13. Exit")
+            print("13. Find Patient by ID")
+            print("14. Find Doctor by ID")
+            print("15. Find Appointment by ID")
+            print("16. Exit")
      
             choice = input("Enter your choice: ")
      
@@ -84,6 +87,30 @@ def menu():
                 appointment_id = int(input("Enter appointment id to delete: "))
                 delete_appointment(session, appointment_id)
             elif choice == '13':
+                patient_id = int(input("Enter patient ID to find: "))
+                patient = Patient.find_by_id(session, patient_id)
+                if patient:
+                    print("Patient found:")
+                    print(f"ID: {patient.id}, Name: {patient.name}, Age: {patient.age}, Illness: {patient.illness}, Doctor ID: {patient.doctor_id}")
+                else:
+                    print("Patient not found.")
+            elif choice == '14':
+                doctor_id = int(input("Enter doctor ID to find: "))
+                doctor = Doctor.find_by_id(session, doctor_id)
+                if doctor:
+                    print("Doctor found:")
+                    print(f"ID: {doctor.id}, Name: {doctor.name}, Speciality: {doctor.speciality}, Contact: {doctor.contact}")
+                else:
+                    print("Doctor not found.")
+            elif choice == '15':
+                appointment_id = int(input("Enter appointment ID to find: "))
+                appointment = Appointment.find_by_id(session, appointment_id)
+                if appointment:
+                    print("Appointment found:")
+                    print(f"ID: {appointment.id}, Date: {appointment.appointment_date}, Reason: {appointment.reason}, Status: {appointment.status}, Patient ID: {appointment.patient_id}, Doctor ID: {appointment.doctor_id}")
+                else:
+                    print("Appointment not found.")
+            elif choice == '16':
                 print("Exiting the program.")
                 break
             else:
