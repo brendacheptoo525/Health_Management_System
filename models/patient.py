@@ -17,9 +17,9 @@ class Patient(Base):
     def find_by_id(cls, session, patient_id):
         return session.query(cls).filter(cls.id == patient_id).first()
         
-def create_patient(session, name, age, illness, doctor_id):
+def create_patient(session, patient_data: dict):
     try:
-        patient = Patient(name=name, age=age, illness=illness, doctor_id=doctor_id)
+        patient = Patient(**patient_data)
         session.add(patient)
         session.commit()
         print("Patient created successfully.")
@@ -32,7 +32,14 @@ def list_patients(session):
         if patients:
             print("Patients:")
             for patient in patients:
-                print(f"ID: {patient.id}, Name: {patient.name}, Age: {patient.age}, Illness: {patient.illness}, Doctor ID: {patient.doctor_id}")
+                patient_data = {
+                    "ID": patient.id,
+                    "Name": patient.name,
+                    "Age": patient.age,
+                    "Illness": patient.illness,
+                    "Doctor ID": patient.doctor_id
+                }
+                print(patient_data)
         else:
             print("No patients found.")
     except Exception as e:
@@ -50,17 +57,47 @@ def delete_patient(session, patient_id):
     except Exception as e:
         print("Error occurred while deleting patient:", e)
 
-def update_patient(session, patient_id, new_name, new_age, new_illness, new_doctor_id):
+def update_patient(session, patient_id, update_data: dict):
     try:
         patient = session.query(Patient).filter_by(id=patient_id).first()
         if patient:
-            patient.name = new_name
-            patient.age = new_age
-            patient.illness = new_illness
-            patient.doctor_id = new_doctor_id
+            for key, value in update_data.items():
+                setattr(patient, key, value)
             session.commit()
             print("Patient updated successfully.")
         else:
             print("Patient not found.")
     except Exception as e:
         print("Error occurred while updating patient:", e)
+
+# Example usage
+if __name__ == "__main__":
+    from sqlalchemy.orm import sessionmaker
+    from database.connection import engine
+
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    # Create a patient
+    patient_data = {
+        "name": "Jane Doe",
+        "age": 30,
+        "illness": "Flu",
+        "doctor_id": 1
+    }
+    create_patient(session, patient_data)
+
+    # List all patients
+    list_patients(session)
+
+    # Update a patient
+    update_data = {
+        "name": "Jane Smith",
+        "age": 31,
+        "illness": "Cold",
+        "doctor_id": 2
+    }
+    update_patient(session, patient_id=1, update_data=update_data)
+
+    # Delete a patient
+    delete_patient(session, patient_id=1)

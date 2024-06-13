@@ -12,13 +12,13 @@ class Doctor(Base):
 
     patients = relationship("Patient", back_populates="doctor")
 
-     @classmethod
+    @classmethod
     def find_by_id(cls, session, doctor_id):
         return session.query(cls).filter(cls.id == doctor_id).first()
 
-def create_doctor(session, name, speciality, contact):
+def create_doctor(session, doctor_data: dict):
     try:
-        doctor = Doctor(name=name, speciality=speciality, contact=contact)
+        doctor = Doctor(**doctor_data)
         session.add(doctor)
         session.commit()
         print("Doctor created successfully.")
@@ -31,7 +31,13 @@ def list_doctors(session):
         if doctors:
             print("Doctors:")
             for doctor in doctors:
-                print(f"ID: {doctor.id}, Name: {doctor.name}, Speciality: {doctor.speciality}, Contact: {doctor.contact}")
+                doctor_data = {
+                    "ID": doctor.id,
+                    "Name": doctor.name,
+                    "Specialty": doctor.specialty,
+                    "Contact": doctor.contact
+                }
+                print(doctor_data)
         else:
             print("No doctors found.")
     except Exception as e:
@@ -49,16 +55,45 @@ def delete_doctor(session, doctor_id):
     except Exception as e:
         print("Error occurred while deleting doctor:", e)
 
-def update_doctor(session, doctor_id, new_name, new_speciality, new_contact):
+def update_doctor(session, doctor_id, update_data: dict):
     try:
         doctor = session.query(Doctor).filter_by(id=doctor_id).first()
         if doctor:
-            doctor.name = new_name
-            doctor.speciality = new_speciality
-            doctor.contact = new_contact
+            for key, value in update_data.items():
+                setattr(doctor, key, value)
             session.commit()
             print("Doctor updated successfully.")
         else:
             print("Doctor not found.")
     except Exception as e:
         print("Error occurred while updating doctor:", e)
+
+# Example usage
+if __name__ == "__main__":
+    from sqlalchemy.orm import sessionmaker
+    from database.connection import engine
+
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    # Create a doctor
+    doctor_data = {
+        "name": "Dr. John Doe",
+        "specialty": "Cardiology",
+        "contact": "123-456-7890"
+    }
+    create_doctor(session, doctor_data)
+
+    # List all doctors
+    list_doctors(session)
+
+    # Update a doctor
+    update_data = {
+        "name": "Dr. John Smith",
+        "specialty": "Neurology",
+        "contact": "098-765-4321"
+    }
+    update_doctor(session, doctor_id=1, update_data=update_data)
+
+    # Delete a doctor
+    delete_doctor(session, doctor_id=1)

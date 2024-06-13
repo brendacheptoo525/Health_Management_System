@@ -37,19 +37,37 @@ def menu():
                 age = int(input("Enter patient age: "))
                 illness = input("Enter patient illness: ")
                 doctor_id = int(input("Enter doctor id: "))
-                create_patient(session, name, age, illness, doctor_id)
+                patient_data = {
+                    "name": name,
+                    "age": age,
+                    "illness": illness,
+                    "doctor_id": doctor_id
+                }
+                create_patient(session, patient_data)
             elif choice == '2':
                 name = input("Enter doctor name: ")
                 speciality = input("Enter doctor speciality: ")
                 contact = input("Enter doctor contact: ")
-                create_doctor(session, name, speciality, contact)
+                doctor_data = {
+                    "name": name,
+                    "speciality": speciality,
+                    "contact": contact
+                }
+                create_doctor(session, doctor_data)
             elif choice == '3':
                 appointment_date = input("Enter appointment date (YYYY-MM-DD): ")
                 reason = input("Enter appointment reason: ")
                 status = input("Enter appointment status: ")
                 patient_id = int(input("Enter patient id: "))
                 doctor_id = int(input("Enter doctor id: "))
-                create_appointment(session, appointment_date, reason, status, patient_id, doctor_id)
+                appointment_data = {
+                    "appointment_date": appointment_date,
+                    "reason": reason,
+                    "status": status,
+                    "patient_id": patient_id,
+                    "doctor_id": doctor_id
+                }
+                create_appointment(session, appointment_data)
             elif choice == '4':
                 list_patients(session)
             elif choice == '5':
@@ -62,13 +80,24 @@ def menu():
                 new_age = int(input("Enter new patient age: "))
                 new_illness = input("Enter new patient illness: ")
                 new_doctor_id = int(input("Enter new doctor id: "))
-                update_patient(session, patient_id, new_name, new_age, new_illness, new_doctor_id)
+                update_data = {
+                    "name": new_name,
+                    "age": new_age,
+                    "illness": new_illness,
+                    "doctor_id": new_doctor_id
+                }
+                update_patient(session, patient_id, update_data)
             elif choice == '8':
                 doctor_id = int(input("Enter doctor id to update: "))
                 new_name = input("Enter new doctor name: ")
                 new_speciality = input("Enter new doctor speciality: ")
                 new_contact = input("Enter new doctor contact: ")
-                update_doctor(session, doctor_id, new_name, new_speciality, new_contact)
+                update_data = {
+                    "name": new_name,
+                    "speciality": new_speciality,
+                    "contact": new_contact
+                }
+                update_doctor(session, doctor_id, update_data)
             elif choice == '9':
                 appointment_id = int(input("Enter appointment id to update: "))
                 new_date = input("Enter new appointment date (YYYY-MM-DD): ")
@@ -76,7 +105,14 @@ def menu():
                 new_status = input("Enter new appointment status: ")
                 new_patient_id = int(input("Enter new patient id: "))
                 new_doctor_id = int(input("Enter new doctor id: "))
-                update_appointment(session, appointment_id, new_date, new_reason, new_status, new_patient_id, new_doctor_id)
+                update_data = {
+                    "appointment_date": new_date,
+                    "reason": new_reason,
+                    "status": new_status,
+                    "patient_id": new_patient_id,
+                    "doctor_id": new_doctor_id
+                }
+                update_appointment(session, appointment_id, update_data)
             elif choice == '10':
                 patient_id = int(input("Enter patient id to delete: "))
                 delete_patient(session, patient_id)
