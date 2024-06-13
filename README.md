@@ -22,6 +22,13 @@ By digitizing administrative tasks and providing a user-friendly interface, the 
 -Error handling
 -Data integrity and security
 
+## Features
+Creating new patient,doctor and appointment.
+Listing all the patients,doctors and appointment.
+Updating existing patient,doctor and appointment.
+Deleting existing patient,doctor and appointment.
+Finding patients,doctors and appointment by their IDs.
+
 ## Installation requirements
 Git
 
